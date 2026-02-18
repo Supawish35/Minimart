@@ -1,25 +1,37 @@
+using System.ComponentModel;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
 namespace Minimart;
 
-public partial class FrmEditCatagory : Form {
-    
+public partial class FrmEditCategory : Form {
     private SqlConnection? _conn;
-    
-    public FrmEditCatagory() {
-        InitializeComponent();
-    }
 
-    public int CategoryID { get; set; }
-    public string CategoryName { get; set; }
-    public string Description { get; set; }
+    [DefaultValue(0)]
+    public int CategoryId { get; set; } 
+
+    [DefaultValue("")]
+    public string CategoryName { get; set; } 
+
+    [DefaultValue("")] // You can set a string default too
     public string Status { get; set; }
+    
+    [DefaultValue("")]
+    public string Description { get; set; }
 
+
+    public FrmEditCategory() {
+        InitializeComponent();
+        CategoryId = 0;
+        CategoryName = "";
+        Description = "";
+        Status = "";
+    }
+    
     private void frmEditCategory_Load(object sender, EventArgs e) {
         _conn = Minimart.Connect();
         //นำข้อมูลเริ่มต้นที่ส่งมาจากฟอร์มหลักมาแสดง
-        txtCategoryID.Text = CategoryID.ToString();
+        txtCategoryID.Text = CategoryId.ToString();
         txtCategoryName.Text = CategoryName;
         txtDescription.Text = Description;
 
@@ -28,7 +40,7 @@ public partial class FrmEditCatagory : Form {
     }
 
     private void btnClear_Click(object sender, EventArgs e) {
-        txtCategoryID.Text = CategoryID.ToString();
+        txtCategoryID.Text = CategoryId.ToString();
         txtCategoryName.Text = CategoryName;
         txtDescription.Text = Description;
     }
@@ -42,7 +54,7 @@ public partial class FrmEditCatagory : Form {
     }
 
     private void UpdateData() {
-        string sql = "Update Categories set CategoryName =@CategoryName,"
+        string sql = "Update Categories set CategoryName = @CategoryName,"
                      + " Description = @Description "
                      + " Where categoryID = @CategoryID";
         SqlCommand cmd = new SqlCommand(sql, _conn);

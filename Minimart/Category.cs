@@ -3,8 +3,8 @@ using System.Data;
 
 namespace Minimart;
 
-public partial class Catagory : Form {
-    public Catagory() {
+public partial class Category : Form {
+    public Category() {
         InitializeComponent();
     }
     SqlConnection? _conn;
@@ -47,8 +47,8 @@ public partial class Catagory : Form {
     private void btnInsert_Click(object sender, EventArgs e) {
         //ปุ่มเพิ่มข้อมูล
         //เปิดฟอร์ม frmEditCategory ในโหมดเพิ่มข้อมูล
-        frmEditCategory frm = new frmEditCategory();
-        frm.CategoryID = 0; //เพิ่มใหม่
+        FrmEditCategory frm = new FrmEditCategory();
+        frm.CategoryId = 0; //เพิ่มใหม่
         frm.CategoryName = string.Empty;
         frm.Description = string.Empty;
         frm.Status = "Insert";
@@ -59,11 +59,12 @@ public partial class Catagory : Form {
     private void dgvCategory_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
         //double click ที่ข้อมูลเพื่อแก้ไขข้อมูล
         //เปิดฟอร์ม frmEditCategory ในโหมดแก้ไขข้อมูล
-        frmEditCategory frm = new frmEditCategory();
-        frm.CategoryID = _categoryId; //แก้ไข
+        FrmEditCategory frm = new FrmEditCategory();
+        frm.CategoryId = _categoryId; //แก้ไข
         frm.CategoryName = _categoryName;
         frm.Description = _description;
         frm.Status = "Update";
+        
         frm.ShowDialog();
         ShowData(""); //รีเฟรชข้อมูล
     }

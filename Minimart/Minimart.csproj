@@ -8,4 +8,26 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.0-preview3.25342.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Category.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="FrmEditCategory.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="FrmEditProduct.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Product.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="FrmPOS.cs">
+        <SubType>Form</SubType>
+      </Compile>
+    </ItemGroup>
+
 </Project>

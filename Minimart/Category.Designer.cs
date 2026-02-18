@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace Minimart;
 
-partial class Catagory {
+partial class Category {
     /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -200,4 +200,3 @@ partial class Catagory {
         private Label label5;
         private Label label6;
     }
-}
