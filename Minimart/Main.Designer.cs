@@ -28,50 +28,104 @@ partial class Main {
     /// </summary>
     private void InitializeComponent() {
         menuStrip1 = new System.Windows.Forms.MenuStrip();
-        productToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        categoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        employeeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        pOSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+        mnuCRUD = new System.Windows.Forms.ToolStripMenuItem();
+        mnuProduct = new System.Windows.Forms.ToolStripMenuItem();
+        mnuEmployee = new System.Windows.Forms.ToolStripMenuItem();
+        mnuCategory = new System.Windows.Forms.ToolStripMenuItem();
+        mnuReport = new System.Windows.Forms.ToolStripMenuItem();
+        mnuProductByCategory = new System.Windows.Forms.ToolStripMenuItem();
+        mnuEmployeeSale = new System.Windows.Forms.ToolStripMenuItem();
+        mnuPos = new System.Windows.Forms.ToolStripMenuItem();
+        mnuLogout = new System.Windows.Forms.ToolStripMenuItem();
+        toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+        mnuLogin = new System.Windows.Forms.ToolStripMenuItem();
         menuStrip1.SuspendLayout();
         SuspendLayout();
         // 
         // menuStrip1
         // 
         menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-        menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { productToolStripMenuItem, categoryToolStripMenuItem, employeeToolStripMenuItem, pOSToolStripMenuItem });
+        menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { mnuCRUD, mnuReport, mnuPos, mnuLogout, toolStripMenuItem1 });
         menuStrip1.Location = new System.Drawing.Point(0, 0);
         menuStrip1.Name = "menuStrip1";
         menuStrip1.Size = new System.Drawing.Size(1007, 28);
         menuStrip1.TabIndex = 0;
         menuStrip1.Text = "menuStrip1";
         // 
-        // productToolStripMenuItem
+        // mnuCRUD
         // 
-        productToolStripMenuItem.Name = "productToolStripMenuItem";
-        productToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
-        productToolStripMenuItem.Text = "Product";
-        productToolStripMenuItem.Click += productToolStripMenuItem_Click;
+        mnuCRUD.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { mnuProduct, mnuEmployee, mnuCategory });
+        mnuCRUD.Name = "mnuCRUD";
+        mnuCRUD.Size = new System.Drawing.Size(95, 24);
+        mnuCRUD.Text = "จัดการข้อมูล";
         // 
-        // categoryToolStripMenuItem
+        // mnuProduct
         // 
-        categoryToolStripMenuItem.Name = "categoryToolStripMenuItem";
-        categoryToolStripMenuItem.Size = new System.Drawing.Size(83, 24);
-        categoryToolStripMenuItem.Text = "Category";
-        categoryToolStripMenuItem.Click += categoryToolStripMenuItem_Click;
+        mnuProduct.Name = "mnuProduct";
+        mnuProduct.Size = new System.Drawing.Size(239, 26);
+        mnuProduct.Text = "จัดการข้อมูลสินค้า";
+        mnuProduct.Click += mnuProduct_Click;
         // 
-        // employeeToolStripMenuItem
+        // mnuEmployee
         // 
-        employeeToolStripMenuItem.Name = "employeeToolStripMenuItem";
-        employeeToolStripMenuItem.Size = new System.Drawing.Size(89, 24);
-        employeeToolStripMenuItem.Text = "Employee";
-        employeeToolStripMenuItem.Click += employeeToolStripMenuItem_Click;
+        mnuEmployee.Name = "mnuEmployee";
+        mnuEmployee.Size = new System.Drawing.Size(239, 26);
+        mnuEmployee.Text = "จัดการข้อมูลพนักงาน";
+        mnuEmployee.Click += mnuEmployee_Click;
         // 
-        // pOSToolStripMenuItem
+        // mnuCategory
         // 
-        pOSToolStripMenuItem.Name = "pOSToolStripMenuItem";
-        pOSToolStripMenuItem.Size = new System.Drawing.Size(50, 24);
-        pOSToolStripMenuItem.Text = "POS";
-        pOSToolStripMenuItem.Click += pOSToolStripMenuItem_Click;
+        mnuCategory.Name = "mnuCategory";
+        mnuCategory.Size = new System.Drawing.Size(239, 26);
+        mnuCategory.Text = "จัดการข้อมูลประเภทสินค้า";
+        mnuCategory.Click += mnuCategory_Click;
+        // 
+        // mnuReport
+        // 
+        mnuReport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { mnuProductByCategory, mnuEmployeeSale });
+        mnuReport.Name = "mnuReport";
+        mnuReport.Size = new System.Drawing.Size(86, 24);
+        mnuReport.Text = "แสดงข้อมูล";
+        // 
+        // mnuProductByCategory
+        // 
+        mnuProductByCategory.Name = "mnuProductByCategory";
+        mnuProductByCategory.Size = new System.Drawing.Size(229, 26);
+        mnuProductByCategory.Text = "แสดงข้อมูลตามประเภท";
+        mnuProductByCategory.Click += mnuProductByCategory_Click;
+        // 
+        // mnuEmployeeSale
+        // 
+        mnuEmployeeSale.Name = "mnuEmployeeSale";
+        mnuEmployeeSale.Size = new System.Drawing.Size(229, 26);
+        mnuEmployeeSale.Text = "แสดงข้อมูลตามพนักงาน";
+        mnuEmployeeSale.Click += mnuEmployeeSale_Click;
+        // 
+        // mnuPos
+        // 
+        mnuPos.Name = "mnuPos";
+        mnuPos.Size = new System.Drawing.Size(104, 24);
+        mnuPos.Text = "จำหน่ายสินค้า";
+        mnuPos.Click += mnuPos_Click;
+        // 
+        // mnuLogout
+        // 
+        mnuLogout.Name = "mnuLogout";
+        mnuLogout.Size = new System.Drawing.Size(101, 24);
+        mnuLogout.Text = "ออกจากระบบ";
+        mnuLogout.Click += mnuLogout_Click;
+        // 
+        // toolStripMenuItem1
+        // 
+        toolStripMenuItem1.Name = "toolStripMenuItem1";
+        toolStripMenuItem1.Size = new System.Drawing.Size(14, 24);
+        // 
+        // mnuLogin
+        // 
+        mnuLogin.Name = "mnuLogin";
+        mnuLogin.Size = new System.Drawing.Size(80, 24);
+        mnuLogin.Text = "เข้าสู่ระบบ";
+        mnuLogin.Click += mnuLogin_Click;
         // 
         // Main
         // 
@@ -81,19 +135,31 @@ partial class Main {
         Controls.Add(menuStrip1);
         IsMdiContainer = true;
         MainMenuStrip = menuStrip1;
-        Text = "Main";
+        Text = "ระบบร้านสะดวกซื้อขนาดเล็ก";
+        Load += Main_Load;
         menuStrip1.ResumeLayout(false);
         menuStrip1.PerformLayout();
         ResumeLayout(false);
         PerformLayout();
     }
 
-    private System.Windows.Forms.ToolStripMenuItem pOSToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+
+    private System.Windows.Forms.ToolStripMenuItem mnuLogout;
+    private System.Windows.Forms.ToolStripMenuItem mnuLogin;
+
+    private System.Windows.Forms.ToolStripMenuItem mnuProductByCategory;
+    private System.Windows.Forms.ToolStripMenuItem mnuEmployeeSale;
+
+    private System.Windows.Forms.ToolStripMenuItem mnuProduct;
+    private System.Windows.Forms.ToolStripMenuItem mnuEmployee;
+    private System.Windows.Forms.ToolStripMenuItem mnuCategory;
+
+    private System.Windows.Forms.ToolStripMenuItem mnuPos;
 
     private System.Windows.Forms.MenuStrip menuStrip1;
-    private System.Windows.Forms.ToolStripMenuItem productToolStripMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem categoryToolStripMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem employeeToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem mnuCRUD;
+    private System.Windows.Forms.ToolStripMenuItem mnuReport;
 
     #endregion
 }

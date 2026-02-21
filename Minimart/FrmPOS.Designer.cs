@@ -54,7 +54,7 @@ partial class FrmPos {
         // 
         // label1
         // 
-        label1.Location = new System.Drawing.Point(13, 25);
+        label1.Location = new System.Drawing.Point(132, 29);
         label1.Name = "label1";
         label1.Size = new System.Drawing.Size(128, 23);
         label1.TabIndex = 0;
@@ -62,9 +62,10 @@ partial class FrmPos {
         // 
         // txtEmployeeID
         // 
-        txtEmployeeID.Location = new System.Drawing.Point(96, 21);
+        txtEmployeeID.Location = new System.Drawing.Point(215, 25);
         txtEmployeeID.Name = "txtEmployeeID";
-        txtEmployeeID.Size = new System.Drawing.Size(178, 27);
+        txtEmployeeID.ReadOnly = true;
+        txtEmployeeID.Size = new System.Drawing.Size(89, 27);
         txtEmployeeID.TabIndex = 1;
         txtEmployeeID.KeyDown += txtEmployeeID_KeyDown;
         // 

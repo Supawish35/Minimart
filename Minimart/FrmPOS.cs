@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.Design;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -11,8 +11,7 @@ public partial class FrmPos : Form {
     [DefaultValue("")] public string EmpName { get; set; }
     [DefaultValue("")] public string Position { get; set; }
     [DefaultValue("")] public string UserName { get; set; }
-
-    //ประกาศตัวแปรเชอื่ มต่อ
+    
     SqlConnection _conn;
     SqlTransaction _tr;
     
@@ -22,14 +21,17 @@ public partial class FrmPos : Form {
         EmpName = "";
         Position = "";
         UserName = "";
-    } //ประกาศ Property ส าหรับเก็บขอ้ มลู ถา้หากมกี าร Login ผ่าน
+    } 
     
     private void frmReceipt_Details_Load(object sender, EventArgs e) {
-        _conn = Minimart.Connect(); //เปลี่ยนตามของตัวเอง
+        _conn = Minimart.Connect(); 
         ListViewFormat();
         ClearProductData();
-        txtEmployeeID.Text = this.EmpId.ToString();
+        txtEmployeeID.Text = this.EmpId > 0 ? this.EmpId.ToString() : "";
         txtEmployeeName.Text = this.EmpName;
+        if (EmpId > 0) {
+            LoadEmployeeById(EmpId);
+        }
         if (EmpId > 0) {
             txtProductID.Focus();
             txtProductID.SelectAll();
@@ -38,8 +40,35 @@ public partial class FrmPos : Form {
             txtEmployeeID.SelectAll();
         }
     }
+    private void LoadEmployeeById(int employeeId) {
+        if (employeeId <= 0) {
+            return;
+        }
 
-    private void ClearProductData() //เคลียร์ข ้อมูลใน Textbox รายการสนิ คา้
+        string sql = "Select EmployeeID, Title+FirstName+space(2)+LastName EmpName, Position"
+                     + " from Employees"
+                     + " Where EmployeeID = @EmployeeID";
+        SqlCommand comm = new SqlCommand(sql, _conn);
+        comm.Parameters.AddWithValue("@EmployeeID", employeeId);
+
+        if (_conn.State != ConnectionState.Open) {
+            _conn.Open();
+        }
+
+        SqlDataReader dr = comm.ExecuteReader();
+        if (dr.HasRows) {
+            DataTable dt = new DataTable();
+            dt.Load(dr);
+            txtEmployeeID.Text = dt.Rows[0][0].ToString();
+            txtEmployeeName.Text = dt.Rows[0][1].ToString();
+        } else {
+            ClearEmployeeData();
+        }
+
+        dr.Close();
+        _conn.Close();
+    }
+    private void ClearProductData() 
     {
         txtProductID.Text = "";
         txtProductName.Text = "";
@@ -48,7 +77,7 @@ public partial class FrmPos : Form {
         txtTotal.Text = "0";
     }
 
-    private void ListViewFormat() //ส าหรับจัดรูปแบบ ListView
+    private void ListViewFormat() 
     {
         lsvProducts.Columns.Add("รหัสสินค้า", 120, HorizontalAlignment.Left);
         lsvProducts.Columns.Add("สินค้า", 170, HorizontalAlignment.Left);
@@ -60,13 +89,13 @@ public partial class FrmPos : Form {
         lsvProducts.FullRowSelect = true;
     }
 
-    private void ClearEmployeeData() //เคลยี รช์ อื่ และรหัสพนักงาน
+    private void ClearEmployeeData() //à¹€à¸„à¸¥à¸¢à¸µ à¸£à¸Šà¹Œ à¸­à¸·à¹ˆ à¹à¸¥à¸°à¸£à¸«à¸±à¸ªà¸žà¸™à¸±à¸à¸‡à¸²à¸™
     {
         txtEmployeeID.Text = "";
         txtEmployeeName.Text = "";
     }
 
-    private void CalculateTotal() //เอาไว้ค านวณราคารวมของแต่ละรายการ
+    private void CalculateTotal() //à¹€à¸­à¸²à¹„à¸§à¹‰à¸„ à¸²à¸™à¸§à¸“à¸£à¸²à¸„à¸²à¸£à¸§à¸¡à¸‚à¸­à¸‡à¹à¸•à¹ˆà¸¥à¸°à¸£à¸²à¸¢à¸à¸²à¸£
     {
         double total = Convert.ToDouble(txtUnitPrice.Text) * Convert.ToDouble(txtQuantity.Text);
         txtTotal.Text = total.ToString("#,##0.00");
@@ -74,7 +103,7 @@ public partial class FrmPos : Form {
         txtProductID.SelectAll();
     }
 
-    private void CalculateNetPrice() //เอาไว้ค านวณราคารวมทั้งหมด
+    private void CalculateNetPrice() //à¹€à¸­à¸²à¹„à¸§à¹‰à¸„ à¸²à¸™à¸§à¸“à¸£à¸²à¸„à¸²à¸£à¸§à¸¡à¸—à¸±à¹‰à¸‡à¸«à¸¡à¸”
     {
         double tmpNetPrice = 0.0;
         for (int i = 0; i <= lsvProducts.Items.Count - 1; i++) {
@@ -146,7 +175,7 @@ public partial class FrmPos : Form {
             
             add_product();
         } else {
-            MessageBox.Show("ไม่พบรหัสสินค้านี้", "ผิดพลาด");
+            MessageBox.Show("à¹„à¸¡à¹ˆà¸žà¸šà¸£à¸«à¸±à¸ªà¸ªà¸´à¸™à¸„à¹‰à¸²à¸™à¸µà¹‰", "à¸œà¸´à¸”à¸žà¸¥à¸²à¸”");
             ClearProductData();
             txtProductID.Focus();
             txtProductID.SelectAll();
@@ -171,7 +200,7 @@ public partial class FrmPos : Form {
     }
 
     private void lsvProducts_DoubleClick(object sender, EventArgs e) {
-        //เมื่อ Double click บนขอ้มลู สนิ คา้จะลบสนิ คา้ออกจากรายการ
+        //à¹€à¸¡à¸·à¹ˆà¸­ Double click à¸šà¸™à¸‚à¸­à¹‰à¸¡à¸¥à¸¹ à¸ªà¸™à¸´ à¸„à¸²à¹‰à¸ˆà¸°à¸¥à¸šà¸ªà¸™à¸´ à¸„à¸²à¹‰à¸­à¸­à¸à¸ˆà¸²à¸à¸£à¸²à¸¢à¸à¸²à¸£
         for (int i = 0; i <= lsvProducts.SelectedItems.Count - 1; i++) {
             ListViewItem lvi = lsvProducts.SelectedItems[i];
             lsvProducts.Items.Remove(lvi);
@@ -192,24 +221,24 @@ public partial class FrmPos : Form {
     }
 
     private void btnSave_Click(object sender, EventArgs e) {
-        if (MessageBox.Show("ต้องการบันทึกสินค้านี้หรือไม่", "โปรดยืนยัน", MessageBoxButtons.YesNo) ==
+        if (MessageBox.Show("à¸•à¹‰à¸­à¸‡à¸à¸²à¸£à¸šà¸±à¸™à¸—à¸¶à¸à¸ªà¸´à¸™à¸„à¹‰à¸²à¸™à¸µà¹‰à¸«à¸£à¸·à¸­à¹„à¸¡à¹ˆ", "à¹‚à¸›à¸£à¸”à¸¢à¸·à¸™à¸¢à¸±à¸™", MessageBoxButtons.YesNo) ==
             DialogResult.No) {
             return;
         }
 
-        int lastOrderId = 0; //เอาไว้เก็บรหัสที่เพิ่มล่าสุด
+        int lastOrderId = 0; //à¹€à¸­à¸²à¹„à¸§à¹‰à¹€à¸à¹‡à¸šà¸£à¸«à¸±à¸ªà¸—à¸µà¹ˆà¹€à¸žà¸´à¹ˆà¸¡à¸¥à¹ˆà¸²à¸ªà¸¸à¸”
         if (lsvProducts.Items.Count > 0) {
-//ประกาศเริ่ม Transaction
+//à¸›à¸£à¸°à¸à¸²à¸¨à¹€à¸£à¸´à¹ˆà¸¡ Transaction
             _conn.Open();
             _tr = _conn.BeginTransaction();
-//เพิ่มข ้อมูล Receipt
+//à¹€à¸žà¸´à¹ˆà¸¡à¸‚ à¹‰à¸­à¸¡à¸¹à¸¥ Receipt
             SqlCommand comm = new SqlCommand("InsertReceipts", _conn, _tr);
             comm.CommandType = CommandType.StoredProcedure;
             comm.Parameters.AddWithValue("@ReceiptDate", DateTime.Today);
             comm.Parameters.AddWithValue("@EmployeeID", txtEmployeeID.Text);
             comm.Parameters.AddWithValue("@TotalCash", lblNetPrice.Text);
             comm.ExecuteNonQuery();
-//อ่านข ้อมูล รหัสของ Receipt รายการล่าสุดไว้ในตัวแปร LastOrderID
+//à¸­à¹ˆà¸²à¸™à¸‚ à¹‰à¸­à¸¡à¸¹à¸¥ à¸£à¸«à¸±à¸ªà¸‚à¸­à¸‡ Receipt à¸£à¸²à¸¢à¸à¸²à¸£à¸¥à¹ˆà¸²à¸ªà¸¸à¸”à¹„à¸§à¹‰à¹ƒà¸™à¸•à¸±à¸§à¹à¸›à¸£ LastOrderID
             string sql = "Select top 1 ReceiptID from Receipts Order by ReceiptID desc";
 
             SqlCommand comm1 = new SqlCommand(sql, _conn, _tr);
@@ -220,7 +249,7 @@ public partial class FrmPos : Form {
             }
 
             dr.Close();
-//เพมิ่ รายการสนิ คา้ใน Details โดยใชร้หัส LastOrderID
+//à¹€à¸žà¸¡à¸´à¹ˆ à¸£à¸²à¸¢à¸à¸²à¸£à¸ªà¸™à¸´ à¸„à¸²à¹‰à¹ƒà¸™ Details à¹‚à¸”à¸¢à¹ƒà¸Šà¸£à¹‰à¸«à¸±à¸ª LastOrderID
             string ls = "";
             for (int i = 0; i <= lsvProducts.Items.Count - 1; i++) {
                 SqlCommand comm3 = new SqlCommand("InsertDetails", _conn, _tr);
@@ -239,18 +268,18 @@ public partial class FrmPos : Form {
 
             _tr.Commit();
             _conn.Close();
-            string msg = "รหัสการขาย" + lastOrderId.ToString() + Environment.NewLine
+            string msg = "à¸£à¸«à¸±à¸ªà¸à¸²à¸£à¸‚à¸²à¸¢" + lastOrderId.ToString() + Environment.NewLine
                          + ls
-                         + "ยอดรวม " + lblNetPrice.Text;
-            MessageBox.Show("บันทึกรายการสินค้านี้เรียบร้อย" + msg, "ผลการทำงาน");
+                         + "à¸¢à¸­à¸”à¸£à¸§à¸¡ " + lblNetPrice.Text;
+            MessageBox.Show("à¸šà¸±à¸™à¸—à¸¶à¸à¸£à¸²à¸¢à¸à¸²à¸£à¸ªà¸´à¸™à¸„à¹‰à¸²à¸™à¸µà¹‰à¹€à¸£à¸µà¸¢à¸šà¸£à¹‰à¸­à¸¢" + msg, "à¸œà¸¥à¸à¸²à¸£à¸—à¸³à¸‡à¸²à¸™");
         }
 
-        btnCancel.PerformClick(); //ค าสงั่ นี้สงั่ ใหร้ะบบคลกิป่มุ btnCancel เพื่อเริ่มรายการใหม่
+        btnCancel.PerformClick(); //à¸„ à¸²à¸ªà¸‡à¸±à¹ˆ à¸™à¸µà¹‰à¸ªà¸‡à¸±à¹ˆ à¹ƒà¸«à¸£à¹‰à¸°à¸šà¸šà¸„à¸¥à¸à¸´à¸›à¹ˆà¸¡à¸¸ btnCancel à¹€à¸žà¸·à¹ˆà¸­à¹€à¸£à¸´à¹ˆà¸¡à¸£à¸²à¸¢à¸à¸²à¸£à¹ƒà¸«à¸¡à¹ˆ
     }
 
     private void txtQuantity_KeyDown(object sender, KeyEventArgs e) {
         if (e.KeyCode == Keys.Enter) {
-            btnAdd.PerformClick(); //สงั่ กดป่มุ เพมิ่ ทันที
+            btnAdd.PerformClick(); //à¸ªà¸‡à¸±à¹ˆ à¸à¸”à¸›à¹ˆà¸¡à¸¸ à¹€à¸žà¸¡à¸´à¹ˆ à¸—à¸±à¸™à¸—à¸µ
         }
     }
 
@@ -302,3 +331,4 @@ public partial class FrmPos : Form {
         txtProductID.SelectAll();
     }
 }
+

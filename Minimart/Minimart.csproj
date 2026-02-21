@@ -37,6 +37,15 @@
       <Compile Update="FrmEditEmployee.cs">
         <SubType>Form</SubType>
       </Compile>
+      <Compile Update="ProductByCategory.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Login.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="EmployeeSale.cs">
+        <SubType>Form</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>
