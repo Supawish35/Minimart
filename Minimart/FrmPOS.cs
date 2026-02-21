@@ -6,6 +6,16 @@ using System.Data;
 namespace Minimart;
 
 public partial class FrmPos : Form {
+    
+    [DefaultValue(0)] public int EmpId { get; set; }
+    [DefaultValue("")] public string EmpName { get; set; }
+    [DefaultValue("")] public string Position { get; set; }
+    [DefaultValue("")] public string UserName { get; set; }
+
+    //ประกาศตัวแปรเชอื่ มต่อ
+    SqlConnection _conn;
+    SqlTransaction _tr;
+    
     public FrmPos() {
         InitializeComponent();
         EmpId = 0;
@@ -13,16 +23,7 @@ public partial class FrmPos : Form {
         Position = "";
         UserName = "";
     } //ประกาศ Property ส าหรับเก็บขอ้ มลู ถา้หากมกี าร Login ผ่าน
-
-    [DefaultValue(0)] public int EmpId { get; set; }
-    [DefaultValue("")] public string EmpName { get; set; }
-    [DefaultValue("")] public string Position { get; set; }
-    [DefaultValue("")] public string UserName { get; set; }
-
-//ประกาศตัวแปรเชอื่ มต่อ
-    SqlConnection _conn;
-    SqlTransaction _tr;
-
+    
     private void frmReceipt_Details_Load(object sender, EventArgs e) {
         _conn = Minimart.Connect(); //เปลี่ยนตามของตัวเอง
         ListViewFormat();

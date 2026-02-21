@@ -24,10 +24,10 @@ public partial class Products : Form {
                      + " ,c.CategoryID,CategoryName,discontinued "
                      + " from products p join Categories c "
                      + " on p.CategoryID = c.CategoryID"; //คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง Products
-        Showdata(sql, dgvProducts);
+        ShowData(sql, dgvProducts);
     }
 
-    private void Showdata(string sql, DataGridView dgv) {
+    private void ShowData(string sql, DataGridView dgv) {
         SqlCommand cmd = new SqlCommand(sql, _conn); //สร้างคำสั่ง SQL
         SqlDataAdapter da = new SqlDataAdapter(cmd); //สร้างตัวดึงข้อมูล
         DataSet ds = new DataSet(); //สร้างตัวเก็บข้อมูล
@@ -63,7 +63,7 @@ public partial class Products : Form {
                      + " ,c.CategoryID,CategoryName,discontinued"
                      + " from products p join Categories c "
                      + " on p.CategoryID = c.CategoryID"; //คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง Products
-        Showdata(sql, dgvProducts);
+        ShowData(sql, dgvProducts);
     }
 
     private void dgvProducts_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e) {
@@ -86,7 +86,7 @@ public partial class Products : Form {
         _discontinued = Convert.ToInt16(dgvProducts.CurrentRow.Cells[6].Value);
 
         FrmEditProduct f = new FrmEditProduct();
-        f.ProductId = _productId ;
+        f.ProductId = _productId;
         f.CatProductName = _productName;
         f.UnitPrice = _unitPrice;
         f.UnitsInStock = _unitsInStock;
@@ -99,6 +99,6 @@ public partial class Products : Form {
         string sql = "Select productID, productName, UnitPrice, UnitsInStock, "
                      + " p.CategoryID, CategoryName, Discontinued"
                      + " from products p inner join Categories c on p.CategoryID = c.CategoryID";
-        Showdata(sql, dgvProducts);
+        ShowData(sql, dgvProducts);
     }
 }
